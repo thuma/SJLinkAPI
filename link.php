@@ -46,7 +46,7 @@ $url = 	'http://www.sj.se/microsite/microsite/submit.form?'. 	// Base url
 		'&3A=false'; 											// Dont know whats this is but it seams to be nessesary.
 		
 // Gheck if departure or arrival:
-if($isset($_GET['depDate']) AND $isset($_GET['depTime']))
+if(isset($_GET['depDate']) AND isset($_GET['depTime']))
 	{
 	$time = substr($_GET['depTime'],0,2).'00';
 	$date = preg_replace('/-/','',$_GET['depDate']);
@@ -55,7 +55,7 @@ if($isset($_GET['depDate']) AND $isset($_GET['depTime']))
 				'&F='.$time;
 	}
 	
-elseif($isset($_GET['arrDate']) AND $isset($_GET['arrTime']))
+elseif(isset($_GET['arrDate']) AND isset($_GET['arrTime']))
 	{
 	$time = substr($_GET['arrTime'],0,2).'00';
 	$date = preg_replace('/-/','',$_GET['arrDate']);
@@ -70,7 +70,7 @@ else
 	}
 
 // Check if returntrip is set:
-if($isset($_GET['depDateReturn']) AND $isset($_GET['depTimeReturn']))
+if(isset($_GET['depDateReturn']) AND isset($_GET['depTimeReturn']))
 	{
 	$time = substr($_GET['depTimeReturn'],0,2).'00';
 	$date = preg_replace('/-/','',$_GET['depDateReturn']);
@@ -80,7 +80,7 @@ if($isset($_GET['depDateReturn']) AND $isset($_GET['depTimeReturn']))
 			'&H='.$time;
 	}
 	
-elseif($isset($_GET['arrDateReturn']) AND $isset($_GET['arrTimeReturn']))
+elseif(isset($_GET['arrDateReturn']) AND isset($_GET['arrTimeReturn']))
 	{
 	$time = substr($_GET['arrTimeReturn'],0,2).'00';
 	$date = preg_replace('/-/','',$_GET['arrDate']);
