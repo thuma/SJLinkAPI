@@ -26,11 +26,7 @@ ST Student (75%ST)
 B6 Barn    (07-15)
 BA Barn    (00-06)
 
-link.php?from=00001:074&to=00002:074&depDate2013-03-03&depTime=12:00&travelers=VU,UN,U1
-
-link.php?from=00001:074&to=00002:074&depDate2013-03-03&depTime=12:00&travelers=VU,UN,U1
-
-
+link.php?from=7400001&to=7400002&depDate=2013-03-03&depTime=12:00&travelers=VU,UN,U1
 */
 
 // Convert from national number to split id and national number
@@ -41,7 +37,7 @@ $to = substr($_GET['to'], -5).'%3A0'.substr($_GET['to'], 0,2);
 $url = 	'http://www.sj.se/microsite/microsite/submit.form?'. 	// Base url
 		'&B='.$from.											// From stop NNNNN:CCC, C = country, N = Stationid
 		'&c='.$to. 												// To stop NNNNN:CCC, C = country, N = Stationid
-		'header.key=K253891809275136476'.						// Some key identifying app (May change)
+		'&header.key=K253891809275136476'.						// Some key identifying app (May change)
 		'&l=sv'.												// Lanuage
 		'&3A=false'; 											// Dont know whats this is but it seams to be nessesary.
 		
@@ -106,7 +102,7 @@ $url = $url.'&N='.count($travelers);
 $codename = array('mA','MA','nA','NA','oA','OA','pA','PA','qA');
 
 foreach($travelers as $key => $traveler){
-$url = $url.'&'.$codename.'='.$traveler;
+$url = $url.'&'.$codename[$key].'='.$traveler;
 }
 
 die($url);	
