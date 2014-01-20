@@ -50,18 +50,18 @@ if($isset($_GET['depDate']) AND $isset($_GET['depTime']))
 	{
 	$time = substr($_GET['depTime'],0,2).'00';
 	$date = preg_replace('/-/','',$_GET['depDate']);
-	$url = .'&g=DEPARTURE_DATE_TIME'.
-			'&f='.$date;
-			'&F='.$time;
+	$url = $url.'&g=DEPARTURE_DATE_TIME'.
+				'&f='.$date;
+				'&F='.$time;
 	}
 	
 elseif($isset($_GET['arrDate']) AND $isset($_GET['arrTime']))
 	{
 	$time = substr($_GET['arrTime'],0,2).'00';
 	$date = preg_replace('/-/','',$_GET['arrDate']);
-	$url = .'&g=ARRIVAL_DATE_TIME'.
-			'&f='.$date;
-			'&F='.$time;
+	$url = $url.'&g=ARRIVAL_DATE_TIME'.
+				'&f='.$date;
+				'&F='.$time;
 	}
 	
 else
@@ -74,7 +74,7 @@ if($isset($_GET['depDateReturn']) AND $isset($_GET['depTimeReturn']))
 	{
 	$time = substr($_GET['depTimeReturn'],0,2).'00';
 	$date = preg_replace('/-/','',$_GET['depDateReturn']);
-	$url = .'&i=DEPARTURE_DATE_TIME'.
+	$url =$url.'&i=DEPARTURE_DATE_TIME'.
 			'&G=true'.
 			'&h='.$date;
 			'&H='.$time;
@@ -84,28 +84,29 @@ elseif($isset($_GET['arrDateReturn']) AND $isset($_GET['arrTimeReturn']))
 	{
 	$time = substr($_GET['arrTimeReturn'],0,2).'00';
 	$date = preg_replace('/-/','',$_GET['arrDate']);
-	$url = .'&i=ARRIVAL_DATE_TIMEReturn'.
-			'&G=true'.
-			'&h='.$date;
-			'&H='.$time;
+	$url = $url.'&i=ARRIVAL_DATE_TIMEReturn'.
+				'&G=true'.
+				'&h='.$date;
+				'&H='.$time;
 	}
 	
 else
 	{
-	$url = .'&G=false';
+	$url = $url.'&G=false';
 	}
 
 //Handle travelers:	
 if(isset($_GET['travelers']) == false){
-die('Error: value of travelers is not set.');
+	die('Error: value of travelers is not set.');
 }
+
 $travelers = preg_split('/,/',$_GET['travelers']);
-$url = . '&N='.count($travelers);
+$url = $url.'&N='.count($travelers);
 
 $codename = array('mA','MA','nA','NA','oA','OA','pA','PA','qA');
 
 foreach($travelers as $key => $traveler){
-$url = .'&'.$codename.'='.$traveler;
+$url = $url.'&'.$codename.'='.$traveler;
 }
 
 die($url);	
