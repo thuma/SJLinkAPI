@@ -48,7 +48,7 @@ $url = 	'http://www.sj.se/microsite/microsite/submit.form?'. 	// Base url
 // Gheck if departure or arrival:
 if($isset($_GET['depDate']) AND $isset($_GET['depTime']))
 	{
-	$time = substr($_GET['depTime']0,2).'00';
+	$time = substr($_GET['depTime'],0,2).'00';
 	$date = preg_replace('/-/','',$_GET['depDate']);
 	$url = .'&g=DEPARTURE_DATE_TIME'.
 			'&f='.$date;
