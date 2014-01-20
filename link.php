@@ -40,70 +40,76 @@ $url = 	'http://www.sj.se/microsite/microsite/submit.form?'. 	// Base url
 		'&header.key=K253891809275136476'.						// Some key identifying app (May change)
 		'&l=sv'.												// Lanuage
 		'&3A=false'; 											// Dont know whats this is but it seams to be nessesary.
-		
+
 // Gheck if departure or arrival:
-if(isset($_GET['depDate']) AND isset($_GET['depTime']))
+if(isset($_GET['depDate']) AND isset($_GET['depTime']))			// Deparature
 	{
-	$time = substr($_GET['depTime'],0,2).'00';
-	$date = preg_replace('/-/','',$_GET['depDate']);
-	$url = $url.'&g=DEPARTURE_DATE_TIME'.
-				'&f='.$date;
-				'&F='.$time;
-	}
-	
-elseif(isset($_GET['arrDate']) AND isset($_GET['arrTime']))
-	{
-	$time = substr($_GET['arrTime'],0,2).'00';
-	$date = preg_replace('/-/','',$_GET['arrDate']);
-	$url = $url.'&g=ARRIVAL_DATE_TIME'.
-				'&f='.$date;
-				'&F='.$time;
-	}
-	
-else
-	{
-	die('Error: no depDate/arrDate or depTime/arrTime set.');
+	$time = substr($_GET['depTime'],0,2).'00';					// Use only hours.
+	$date = preg_replace('/-/','',$_GET['depDate']);			// Remove - if any.
+	$url = $url.'&g=DEPARTURE_DATE_TIME'.						// Set to Deparature Time.
+				'&f='.$date;									// Set Date 
+				'&F='.$time;									// Set Time	
 	}
 
+elseif(isset($_GET['arrDate']) AND isset($_GET['arrTime']))		// Arrival
+	{
+	$time = substr($_GET['arrTime'],0,2).'00';					// Use only hours.
+	$date = preg_replace('/-/','',$_GET['arrDate']);			// Remove - if any.
+	$url = $url.'&g=ARRIVAL_DATE_TIME'.							// Set to Arrival Time.
+				'&f='.$date;									// Set Date 
+				'&F='.$time;									// Set Time	
+	}
+
+else
+	{
+	die('Error: no depDate/arrDate or depTime/arrTime set.');	// If not set skipp exec.
+	}
+	
 // Check if returntrip is set:
-if(isset($_GET['depDateReturn']) AND isset($_GET['depTimeReturn']))
+if(isset($_GET['depDateReturn']) AND isset($_GET['depTimeReturn']))	// Returntrip with Deparature Time
 	{
-	$time = substr($_GET['depTimeReturn'],0,2).'00';
-	$date = preg_replace('/-/','',$_GET['depDateReturn']);
-	$url =$url.'&i=DEPARTURE_DATE_TIME'.
-			'&G=true'.
-			'&h='.$date;
-			'&H='.$time;
-	}
-	
-elseif(isset($_GET['arrDateReturn']) AND isset($_GET['arrTimeReturn']))
-	{
-	$time = substr($_GET['arrTimeReturn'],0,2).'00';
-	$date = preg_replace('/-/','',$_GET['arrDate']);
-	$url = $url.'&i=ARRIVAL_DATE_TIMEReturn'.
-				'&G=true'.
-				'&h='.$date;
-				'&H='.$time;
-	}
-	
-else
-	{
-	$url = $url.'&G=false';
+	$time = substr($_GET['depTimeReturn'],0,2).'00';				// Use only hours.
+	$date = preg_replace('/-/','',$_GET['depDateReturn']);			// Remove - if any.
+	$url =$url.'&i=DEPARTURE_DATE_TIME'.							// Set to Arrival Time.
+			'&G=true'.												// Set book return trip to true.
+			'&h='.$date;											// Set Date 
+			'&H='.$time;											// Set Time
 	}
 
-//Handle travelers:	
+elseif(isset($_GET['arrDateReturn']) AND isset($_GET['arrTimeReturn'])) // Returntrip with Arrival Time
+	{
+	$time = substr($_GET['arrTimeReturn'],0,2).'00';				// Use only hours.
+	$date = preg_replace('/-/','',$_GET['arrDate']);				// Remove - if any.
+	$url = $url.'&i=ARRIVAL_DATE_TIMEReturn'.						// Set to Arrival Time.
+				'&G=true'.											// Set book return trip to true.
+				'&h='.$date;										// Set Date 
+				'&H='.$time;										// Set Time
+	}
+
+else
+	{
+	$url = $url.'&G=false';											// If no return trip set to False.
+	}
+
+//Handle travelers set default to one adult.
 if(isset($_GET['travelers']) == false){
-	die('Error: value of travelers is not set.');
+	$travelers = 'VU';
+}
+else{
+	$travelers = preg_split('/,/',$_GET['travelers']);
 }
 
-$travelers = preg_split('/,/',$_GET['travelers']);
+// Split to array
 $url = $url.'&N='.count($travelers);
 
+// List of traveler ids:
 $codename = array('mA','MA','nA','NA','oA','OA','pA','PA','qA');
 
+// Loop all travelers
 foreach($travelers as $key => $traveler){
-$url = $url.'&'.$codename[$key].'='.$traveler;
+	$url = $url.'&'.$codename[$key].'='.$traveler;
 }
 
+// Push user to SJ site.
 header('Location: '.$url);
 ?>
