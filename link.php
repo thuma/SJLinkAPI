@@ -57,7 +57,7 @@ if($isset($_GET['depDate']) AND $isset($_GET['depTime']))
 	
 elseif($isset($_GET['arrDate']) AND $isset($_GET['arrTime']))
 	{
-	$time = substr($_GET['arrTime']0,2).'00';
+	$time = substr($_GET['arrTime'],0,2).'00';
 	$date = preg_replace('/-/','',$_GET['arrDate']);
 	$url = .'&g=ARRIVAL_DATE_TIME'.
 			'&f='.$date;
@@ -72,7 +72,7 @@ else
 // Check if returntrip is set:
 if($isset($_GET['depDateReturn']) AND $isset($_GET['depTimeReturn']))
 	{
-	$time = substr($_GET['depTimeReturn']0,2).'00';
+	$time = substr($_GET['depTimeReturn'],0,2).'00';
 	$date = preg_replace('/-/','',$_GET['depDateReturn']);
 	$url = .'&i=DEPARTURE_DATE_TIME'.
 			'&G=true'.
@@ -82,7 +82,7 @@ if($isset($_GET['depDateReturn']) AND $isset($_GET['depTimeReturn']))
 	
 elseif($isset($_GET['arrDateReturn']) AND $isset($_GET['arrTimeReturn']))
 	{
-	$time = substr($_GET['arrTimeReturn']0,2).'00';
+	$time = substr($_GET['arrTimeReturn'],0,2).'00';
 	$date = preg_replace('/-/','',$_GET['arrDate']);
 	$url = .'&i=ARRIVAL_DATE_TIMEReturn'.
 			'&G=true'.
