@@ -105,6 +105,5 @@ foreach($travelers as $key => $traveler){
 $url = $url.'&'.$codename[$key].'='.$traveler;
 }
 
-die($url);	
 header('Location: '.$url);
 ?>
